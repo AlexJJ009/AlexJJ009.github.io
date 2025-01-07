@@ -1,0 +1,27 @@
+/* 左侧灯笼定位 */
+.deng-box-left {
+    position: fixed;
+    top: -40px;
+    left: -20px;
+    z-index: 999;
+    pointer-events: none;
+    display: none;
+}
+
+.deng-box-left1 {
+    position: fixed;
+    top: -30px;
+    left: 10px;
+    z-index: 999;
+    pointer-events: none;
+    display: none;
+}
+
+/* 右侧灯笼定位 */
+.deng-box-right {
+    position: fixed;
+    top: -40px;
+    right: 10px;
+    z-index: 999;
+    pointer-events: none;
+    display: none;
