@@ -1,0 +1,293 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Ubuntu下配置安装vim和latex以及bspwm | 李功勋的个人主页</title><meta name="author" content="李功勋"><meta name="copyright" content="李功勋"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="安装VMware 16 Pro从B站上找到了资源：VMware Workstation 16 Pro以及序列号，完成了安装。 下载Ubuntu 22.04的镜像文件并安装从官网下载，在VMware Workstation 16 Pro上新建虚拟机，导入ISO文件，软件能够自动检测到是Ubuntu。 安装VIM这里需要率先了解Linux下的命令行常见命令。 1sudo apt install vim">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ubuntu下配置安装vim和latex以及bspwm">
+<meta property="og:url" content="https://alexjj009.github.io/2024/01/19/tech/index.html">
+<meta property="og:site_name" content="李功勋的个人主页">
+<meta property="og:description" content="安装VMware 16 Pro从B站上找到了资源：VMware Workstation 16 Pro以及序列号，完成了安装。 下载Ubuntu 22.04的镜像文件并安装从官网下载，在VMware Workstation 16 Pro上新建虚拟机，导入ISO文件，软件能够自动检测到是Ubuntu。 安装VIM这里需要率先了解Linux下的命令行常见命令。 1sudo apt install vim">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://alexjj009.github.io/img/avatar.jpg">
+<meta property="article:published_time" content="2024-01-19T07:05:36.000Z">
+<meta property="article:modified_time" content="2024-01-19T07:35:52.000Z">
+<meta property="article:author" content="李功勋">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="vim">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://alexjj009.github.io/img/avatar.jpg"><link rel="shortcut icon" href="/img/favicon.jpg"><link rel="canonical" href="https://alexjj009.github.io/2024/01/19/tech/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.12.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.32/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Ubuntu下配置安装vim和latex以及bspwm',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-01-19 15:35:52'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/denlong.css"><!-- 左侧灯笼组--><div class="deng-box-left"><div class="deng"><div class="xian"></div><div class="deng-a"><div class="deng-b"><div class="deng-t">新</div></div></div><div class="shui shui-a"><div class="shui-c"></div><div class="shui-b"></div></div></div></div><div class="deng-box-left1"><div class="deng"><div class="xian"></div><div class="deng-a"><div class="deng-b"><div class="deng-t">年</div></div></div><div class="shui shui-a"><div class="shui-c"></div><div class="shui-b"></div></div></div></div><!-- 右侧灯笼组--><div class="deng-box-right"><div class="deng"><div class="xian"></div><div class="deng-a"><div class="deng-b"><div class="deng-t">快</div></div></div><div class="shui shui-a"><div class="shui-c"></div><div class="shui-b"></div></div></div></div><div class="deng-box-right1"><div class="deng"><div class="xian"></div><div class="deng-a"><div class="deng-b"><div class="deng-t">乐</div></div></div><div class="shui shui-a"><div class="shui-c"></div><div class="shui-b"></div></div></div></div><meta name="generator" content="Hexo 7.0.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
+    }
+  }
+
+  preloader.initLoading()
+  window.addEventListener('load',() => { preloader.endLoading() })
+
+  if (true) {
+    document.addEventListener('pjax:send', () => { preloader.initLoading() })
+    document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+  }
+})()</script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">9</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">13</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="李功勋的个人主页"><span class="site-name">李功勋的个人主页</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Ubuntu下配置安装vim和latex以及bspwm</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-01-19T07:05:36.000Z" title="发表于 2024-01-19 15:05:36">2024-01-19</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-01-19T07:35:52.000Z" title="更新于 2024-01-19 15:35:52">2024-01-19</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1.3k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>4分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Ubuntu下配置安装vim和latex以及bspwm"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="安装VMware-16-Pro"><a href="#安装VMware-16-Pro" class="headerlink" title="安装VMware 16 Pro"></a>安装VMware 16 Pro</h1><p>从B站上找到了资源：VMware Workstation 16 Pro以及序列号，完成了安装。</p>
+<h1 id="下载Ubuntu-22-04的镜像文件并安装"><a href="#下载Ubuntu-22-04的镜像文件并安装" class="headerlink" title="下载Ubuntu 22.04的镜像文件并安装"></a>下载Ubuntu 22.04的镜像文件并安装</h1><p>从官网下载，在VMware Workstation 16 Pro上新建虚拟机，导入ISO文件，软件能够自动检测到是Ubuntu。</p>
+<h1 id="安装VIM"><a href="#安装VIM" class="headerlink" title="安装VIM"></a>安装VIM</h1><p>这里需要率先了解Linux下的命令行常见命令。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install vim</span><br></pre></td></tr></table></figure>
+<h1 id="安装插件管理器-plug-in"><a href="#安装插件管理器-plug-in" class="headerlink" title="安装插件管理器 plug-in"></a>安装插件管理器 plug-in</h1><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/zhaodehua/articles/15108744.html" title="这篇文章让我快速入门如何安装插件到vimrc中">vim vim-plug插件安装及使用 - ༺潭水无风༻ - 博客园</a></p>
+<h1 id="安装插件-vimtex"><a href="#安装插件-vimtex" class="headerlink" title="安装插件 vimtex"></a>安装插件 vimtex</h1><p>尽管我已经能够体验到纯正的vim了，但在这里我还想要尝试一下桌面管理器bspwm，尝试模仿给出一个高效又美观的开发平台。</p>
+<p>这里推荐参考vimtex的 <a target="_blank" rel="noopener" href="https://vimhelp.org/syntax.txt.html#highlight-groups">参考文档</a></p>
+<p>有时面对这样一个庞大的系统，真不知道从何下手呢。上面的文档解决了我遇到的设置conceallevel后，隐藏的公式会有灰色的高亮（heighlight）的问题，这不美观，于是我从上面的文档中找到了heightlight组，设置了conceal部分的heightlight相应需要改动的部分为NONE，即无高亮。</p>
+<h1 id="安装bspwm"><a href="#安装bspwm" class="headerlink" title="安装bspwm"></a>安装bspwm</h1><p>bspwm通过bspc在登录界面选择显示器，实现窗口管理器的功能。<br>这是一个大工程，我在YouTube上找到了一个直播的录播视频，博主完整地记录下了自己如何安装好bsqwm和polybar的全过程，并做了一定的美化。我看了视频的大部分内容。</p>
+<p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=uKQ_a65l8wE">How to Install and Rice BSPWM With Polybar - YouTube</a></p>
+<p>后来找到一个更为详细和美观的教程，非常推荐观看，完整地配置了bspwm, polybar, application launcher等，还修改了配色。</p>
+<p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=HxbhkkfaVuo&t=692s">bspwm: How To “Rice” Your Desktop - YouTube</a></p>
+<h1 id="安装picom用以美化bspwm"><a href="#安装picom用以美化bspwm" class="headerlink" title="安装picom用以美化bspwm"></a>安装picom用以美化bspwm</h1><p>其实我只是想窗口能够出现“毛玻璃”或是有一定的透明度。从GitHub上看指导，直接从源码上安装。<br><a target="_blank" rel="noopener" href="https://github.com/yshui/picom">GitHub - yshui&#x2F;picom: A lightweight compositor for X11</a><br>配置picom，先是问ChatGPT无果，确实有一派胡言的样子，接着发现一个很好的文章，介绍了常用的功能的配置方法，我觉得对于像我这样的新手而言，一顿猛抄和模仿不失为更好的做法。<br><a target="_blank" rel="noopener" href="https://config.phundrak.com/picom.html#:~:text=Picom%20%28Compton%29%20Configuration%201%201.%20Introduction%20Picom%20is,Background%20blurring%20...%207%207.%20General%20settings%20">Attention Required! | Cloudflare</a></p>
+<h1 id="中文输入法"><a href="#中文输入法" class="headerlink" title="中文输入法"></a>中文输入法</h1><p>使用ibus作为引擎，然后发现自带了intelligent pinyin，按 super+space 可以切换输入法<br>起初，我使用的是kitty作为命令行，但发现不能够输入中文，哪怕我切换到拼音也不行。后来改用qterminal作为命令行，就可以了。<br>注意：使用qterminal后，可以右键在preference中更改透明度，但也需要安装picom。</p>
+<h1 id="安装rofi"><a href="#安装rofi" class="headerlink" title="安装rofi"></a>安装rofi</h1><p>使用rofi来启动其他应用，设置了configuration如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@theme &quot;gruvbox-dark&quot;</span><br></pre></td></tr></table></figure>
+<p>效果如下（为了防止与中文输入法切换的按键 super+space冲突，我设置调用rofi的快捷键为 super + shift +a</p>
+<p><img src="/img/tech/01.webp" alt="01"></p>
+<h1 id="修改命令行的文字配色"><a href="#修改命令行的文字配色" class="headerlink" title="修改命令行的文字配色"></a>修改命令行的文字配色</h1><p>我修改了环境变量PS1，这个变量的取值与命令行显示的内容有关</p>
+<blockquote>
+<p>alex@alex-virtual-machine:</p>
+</blockquote>
+<blockquote>
+<p>对应：${debian_chroot:+($debian_chroot)}[\033[01;32m]\u@\h[\033[00m]:</p>
+</blockquote>
+<p>我删去了\h，改为&gt;<br>于是这部分现在显示为<br>alex&gt;:<br>注意到.bashrc中有一段代码长这样：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">if [ &quot;$color_prompt&quot; = yes ]; then</span><br><span class="line">      PS1=&#x27;$&#123;debian_chroot:+($debian_chroot)&#125;\[\033[01;32m    \]\u&gt;\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ &#x27;</span><br><span class="line">else</span><br><span class="line">      PS1=&#x27;$&#123;debian_chroot:+($debian_chroot)&#125;\u@\h:\w\$ &#x27;</span><br></pre></td></tr></table></figure>
+<p>而此时我在bspwm打开的命令行是没有丰富的颜色的，即</p>
+<blockquote>
+<p>alex@alex-virtual-machine:</p>
+</blockquote>
+<p>是纯粹的白色，准确说是黑底白字。于是怀疑是这里的判断导致的差异<br>删去这个判断<br>确实成功了，但是会提示bash export: “–corlor &#x3D; auto”, not a valid identifier…<br>报错原因是我</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">if [ -x /usr/bin/dircolors ]; then test -r ~/.dircolors &amp;&amp; eval &quot;$(dircolors -b ~/.dircolors)&quot; || eval &quot;$(dircolors -b)&quot; &amp;&amp; alias ls=&#x27;ls --color=auto&#x27; # alias dir=&#x27;dir --color=auto&#x27;</span><br></pre></td></tr></table></figure>
+<p>的末尾处原本应该有&amp;&amp;，就是在alias ls&#x3D;’ls –color&#x3D;auto’前的那部分，但我将它删去了，所以导致运行.bashrc时认为给”–color &#x3D; auto”赋值了。<br>成功解决！参考了:</p>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/bc83fae829eb">Linux中 PS1 的用法-亲测有效</a><br><a target="_blank" rel="noopener" href="https://askubuntu.com/questions/529919/how-to-fix-not-a-valid-identifier-error-after-setting-environment-variables">bash - How to fix “not a valid identifier” error after setting environment variables? - Ask Ubuntu</a></p>
+<p>目前效果如下：<br><img src="/img/tech/02.webp" alt="02"></p>
+<h1 id="配置ultisnips"><a href="#配置ultisnips" class="headerlink" title="配置ultisnips"></a>配置ultisnips</h1><p>这配置起来确实很轻松，依照官网即可，下面的博客介绍了使用vim-snippets作为代码块的集合，是个很好的办法。很喜欢作者说的“这个世界上总是有一批又懒又聪明的程序员。”</p>
+<p><a target="_blank" rel="noopener" href="https://ruby-china.org/topics/25023">Vim 插件：UltiSnips 让 Vim 飞起来 · Ruby China (ruby-china.org)</a></p>
+<p>关于自己创建一些snip，可以参考下面</p>
+<p><a target="_blank" rel="noopener" href="https://keelii.com/2018/08/26/vim-plugin-ultisnips-advanced-tips">VIM 代码片段插件 ultisnips 使用教程 (keelii.com)</a></p>
+<p>真香。</p>
+<h1 id="vim-自动补齐括号"><a href="#vim-自动补齐括号" class="headerlink" title="vim 自动补齐括号"></a>vim 自动补齐括号</h1><p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/21316727/automatic-closing-brackets-for-vim">vim plugin - Automatic closing brackets for Vim - Stack Overflow</a></p>
+<p>参照了该回答中直接修改.vimrc映射键的办法，挺好。</p>
+<h1 id="vim-反向搜索"><a href="#vim-反向搜索" class="headerlink" title="vim 反向搜索"></a>vim 反向搜索</h1><p>安装tutorial配置vimtex时，它说vim 版本过低可能导致 -clientserver，即没有启动这个服务，但我使用的是vim 8.2，必然足够版本，并且在命令行下应该可以使用反向搜索。查找后发现是一个bug，见</p>
+<p><a target="_blank" rel="noopener" href="https://vi.stackexchange.com/questions/26025/how-to-install-vim-with-clientserver-on-debian">How to install vim with +clientserver on debian? - Vi and Vim Stack Exchange</a></p>
+<blockquote>
+<p>sudo apt install vim-gtk</p>
+</blockquote>
+<p>安装这个包后，重启一次，输入 vim –version，真的出现了+clientserver！</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://alexjj009.github.io">李功勋</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://alexjj009.github.io/2024/01/19/tech/">https://alexjj009.github.io/2024/01/19/tech/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://alexjj009.github.io" target="_blank">李功勋的个人主页</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Linux/">Linux</a><a class="post-meta__tags" href="/tags/vim/">vim</a></div><div class="post_share"><div class="social-share" data-image="/img/avatar.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i>赞助</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.jpg" target="_blank"><img class="post-qr-code-img" src="/img/wechat.jpg" alt="微信/wechat"/></a><div class="post-qr-code-desc">微信/wechat</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/alipay.jpg" alt="支付宝/alipay"/></a><div class="post-qr-code-desc">支付宝/alipay</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2025/01/06/translation_tools/" title="实用翻译工具推荐与使用心得"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">实用翻译工具推荐与使用心得</div></div></a></div><div class="next-post pull-right"><a href="/2024/01/19/n01/" title="数学分析笔记"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">数学分析笔记</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">李功勋</div><div class="author-info__description">北航大二数学在读</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">9</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">13</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/AlexJJ009/AlexJJ009.github.io" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:22377224@buaa.edu.cn" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%89%E8%A3%85VMware-16-Pro"><span class="toc-number">1.</span> <span class="toc-text">安装VMware 16 Pro</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%8B%E8%BD%BDUbuntu-22-04%E7%9A%84%E9%95%9C%E5%83%8F%E6%96%87%E4%BB%B6%E5%B9%B6%E5%AE%89%E8%A3%85"><span class="toc-number">2.</span> <span class="toc-text">下载Ubuntu 22.04的镜像文件并安装</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%89%E8%A3%85VIM"><span class="toc-number">3.</span> <span class="toc-text">安装VIM</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E6%8F%92%E4%BB%B6%E7%AE%A1%E7%90%86%E5%99%A8-plug-in"><span class="toc-number">4.</span> <span class="toc-text">安装插件管理器 plug-in</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E6%8F%92%E4%BB%B6-vimtex"><span class="toc-number">5.</span> <span class="toc-text">安装插件 vimtex</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%89%E8%A3%85bspwm"><span class="toc-number">6.</span> <span class="toc-text">安装bspwm</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%89%E8%A3%85picom%E7%94%A8%E4%BB%A5%E7%BE%8E%E5%8C%96bspwm"><span class="toc-number">7.</span> <span class="toc-text">安装picom用以美化bspwm</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%AD%E6%96%87%E8%BE%93%E5%85%A5%E6%B3%95"><span class="toc-number">8.</span> <span class="toc-text">中文输入法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%89%E8%A3%85rofi"><span class="toc-number">9.</span> <span class="toc-text">安装rofi</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%9A%84%E6%96%87%E5%AD%97%E9%85%8D%E8%89%B2"><span class="toc-number">10.</span> <span class="toc-text">修改命令行的文字配色</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%85%8D%E7%BD%AEultisnips"><span class="toc-number">11.</span> <span class="toc-text">配置ultisnips</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#vim-%E8%87%AA%E5%8A%A8%E8%A1%A5%E9%BD%90%E6%8B%AC%E5%8F%B7"><span class="toc-number">12.</span> <span class="toc-text">vim 自动补齐括号</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#vim-%E5%8F%8D%E5%90%91%E6%90%9C%E7%B4%A2"><span class="toc-number">13.</span> <span class="toc-text">vim 反向搜索</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/02/04/hello-world/" title="Hello World">Hello World</a><time datetime="2026-02-04T09:37:07.244Z" title="发表于 2026-02-04 17:37:07">2026-02-04</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/12/14/%E2%95%A9%E2%96%93%E2%94%9C%E2%94%A4%E2%95%A9%E2%96%92%E2%95%91%D0%84%E2%95%99%D0%B6%E2%95%95%E2%94%9C%E2%95%9A%E2%94%9CAI%E2%96%91%D1%8F%E2%95%AC%E2%95%A5%E2%95%AB%D0%8EPPT%D0%B3%E2%94%90/" title="什么时候应该让AI帮我做PPT？">什么时候应该让AI帮我做PPT？</a><time datetime="2025-12-14T09:11:53.000Z" title="发表于 2025-12-14 17:11:53">2025-12-14</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/11/20/25%E2%94%80%D1%8A%E2%94%B4%E2%95%A6%D0%B3%D0%BC%E2%95%AC%E2%95%A5%E2%94%9C%E2%95%9F%E2%95%A2%E2%95%9D%E2%95%99%D0%B6%E2%95%95%E2%94%9C%E2%95%A9%E2%95%A3%E2%95%99%E2%94%9CAI%E2%95%99%D1%8F%E2%95%A5%D0%87%E2%95%A9%D1%84%E2%95%9A%D1%8B%E2%95%96%D0%B8/" title="25年了，我们都应该使用AI语音输入法">25年了，我们都应该使用AI语音输入法</a><time datetime="2025-11-20T14:40:33.000Z" title="发表于 2025-11-20 22:40:33">2025-11-20</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/19/mcp/" title="面向新手的MCP使用教程：在Cherry Studio中配置和使用模型上下文协议">面向新手的MCP使用教程：在Cherry Studio中配置和使用模型上下文协议</a><time datetime="2025-03-19T13:59:36.000Z" title="发表于 2025-03-19 21:59:36">2025-03-19</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/01/06/bluetooth_is_missing/" title="Win11蓝牙功能消失的解决方案">Win11蓝牙功能消失的解决方案</a><time datetime="2025-01-06T12:26:00.000Z" title="发表于 2025-01-06 20:26:00">2025-01-06</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2024-01 - 2026 By 李功勋</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.12.0"></script><script src="/js/main.js?v=4.12.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.32/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script src="/js/denlong.js"></script>：<script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-nest.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener
+  btf.removeGlobalFnEvent('pjax')
+  btf.removeGlobalFnEvent('themeChange')
+
+  document.getElementById('rightside').classList.remove('rightside-show')
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+  typeof disqusjs === 'object' && disqusjs.destroy()
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', e => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
