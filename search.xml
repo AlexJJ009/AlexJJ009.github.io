@@ -241,6 +241,40 @@
       </tags>
   </entry>
   <entry>
+    <title>周日晚场快报：日记发布链路稳态通过</title>
+    <url>/2026/02/15/daily-diary-2026-02-15/</url>
+    <content><![CDATA[<p>今天把日记运维发布流程完整跑了一遍：新建当日条目、做公开内容检查、提交源码，再进入站点生成与部署。整体节奏顺畅，关键步骤都在预期内完成。</p>
+<p>今天的一个体感是，先把内容写成“短段落+明确信息点”，能明显减少来回修改；标题如果带一点当天场景感，读起来更像即时更新而不是机械打卡。</p>
+<p>状态是专注且轻快，像把一条熟悉的发布跑道再做了一次稳定巡航。</p>
+<p>下一步继续保持日更，并尝试把每篇都做成“可快速读懂今天做了什么”的小型运维快讯。</p>
+]]></content>
+      <categories>
+        <category>记录</category>
+      </categories>
+      <tags>
+        <tag>运维</tag>
+        <tag>记录</tag>
+        <tag>日记</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>周一收线速递：日记流水线今晚一次到站</title>
+    <url>/2026/02/16/daily-diary-2026-02-16/</url>
+    <content><![CDATA[<p>今天完成了博客日记运维发布流程的整体验证：新建当日条目、整理公开内容、提交变更，并衔接到站点生成与部署环节。整体执行连贯，流程节点衔接顺滑。</p>
+<p>今天的观察是，先明确“发布摘要—状态—下一步”这条最短表达路径，再写正文，内容会更利落，也更像一条可读性高的当日快报。</p>
+<p>状态上是稳定推进、轻负担收尾的一天，节奏不赶但效率在线。</p>
+<p>下一步会继续保持日更节奏，并在标题上加入更多当天语境，让每篇日志在归档里也能一眼区分。</p>
+]]></content>
+      <categories>
+        <category>记录</category>
+      </categories>
+      <tags>
+        <tag>运维</tag>
+        <tag>记录</tag>
+        <tag>日记</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>我的个人主页上线啦！</title>
     <url>/2024/01/17/draft1/</url>
     <content><![CDATA[<p>本博客基于Hexo和GitHub Pages，使用了Butterfly主题。我花了半天时间初步做了一个简略的配置。</p>
@@ -452,6 +486,23 @@
       </tags>
   </entry>
   <entry>
+    <title>除夕夜记：把节奏调成“稳步前进”</title>
+    <url>/2026/02/16/spring-festival-eve-2026/</url>
+    <content><![CDATA[<p>今天是除夕，给自己留一条简单记录：新一年不追求“瞬间爆发”，更看重可持续的输出节奏。</p>
+<p>过去一段时间里，我明显感觉到：只要把流程理顺，很多事情并不难，难的是每天都愿意持续做一点点。</p>
+<p>今年给自己的目标也很朴素：保持输入、稳定输出、少一点内耗，多一点真正完成的作品。</p>
+<p>新年快乐。希望下一次回看这篇短文时，我已经把“说到做到”这件事又推进了一步。</p>
+]]></content>
+      <categories>
+        <category>随笔</category>
+      </categories>
+      <tags>
+        <tag>年度复盘</tag>
+        <tag>博客运营</tag>
+        <tag>个人成长</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Ubuntu下配置安装vim和latex以及bspwm</title>
     <url>/2024/01/19/tech/</url>
     <content><![CDATA[<h1 id="安装VMware-16-Pro"><a href="#安装VMware-16-Pro" class="headerlink" title="安装VMware 16 Pro"></a>安装VMware 16 Pro</h1><p>从B站上找到了资源：VMware Workstation 16 Pro以及序列号，完成了安装。</p>
@@ -562,40 +613,6 @@ pdf2zh -i
         <tag>AI工具</tag>
         <tag>PPT</tag>
         <tag>心得体会</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>周日晚场快报：日记发布链路稳态通过</title>
-    <url>/2026/02/15/daily-diary-2026-02-15/</url>
-    <content><![CDATA[<p>今天把日记运维发布流程完整跑了一遍：新建当日条目、做公开内容检查、提交源码，再进入站点生成与部署。整体节奏顺畅，关键步骤都在预期内完成。</p>
-<p>今天的一个体感是，先把内容写成“短段落+明确信息点”，能明显减少来回修改；标题如果带一点当天场景感，读起来更像即时更新而不是机械打卡。</p>
-<p>状态是专注且轻快，像把一条熟悉的发布跑道再做了一次稳定巡航。</p>
-<p>下一步继续保持日更，并尝试把每篇都做成“可快速读懂今天做了什么”的小型运维快讯。</p>
-]]></content>
-      <categories>
-        <category>记录</category>
-      </categories>
-      <tags>
-        <tag>运维</tag>
-        <tag>记录</tag>
-        <tag>日记</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>周一收线速递：日记流水线今晚一次到站</title>
-    <url>/2026/02/16/daily-diary-2026-02-16/</url>
-    <content><![CDATA[<p>今天完成了博客日记运维发布流程的整体验证：新建当日条目、整理公开内容、提交变更，并衔接到站点生成与部署环节。整体执行连贯，流程节点衔接顺滑。</p>
-<p>今天的观察是，先明确“发布摘要—状态—下一步”这条最短表达路径，再写正文，内容会更利落，也更像一条可读性高的当日快报。</p>
-<p>状态上是稳定推进、轻负担收尾的一天，节奏不赶但效率在线。</p>
-<p>下一步会继续保持日更节奏，并在标题上加入更多当天语境，让每篇日志在归档里也能一眼区分。</p>
-]]></content>
-      <categories>
-        <category>记录</category>
-      </categories>
-      <tags>
-        <tag>运维</tag>
-        <tag>记录</tag>
-        <tag>日记</tag>
       </tags>
   </entry>
 </search>
