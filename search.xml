@@ -1006,4 +1006,22 @@ pdf2zh -i
         <tag>日记</tag>
       </tags>
   </entry>
+  <entry>
+    <title>先把容器化栈排成一列：今晚把 NewAPI / CLIProxyAPI / OpenClaw 的上线顺序捋顺了</title>
+    <url>/2026/03/17/daily-diary-2026-03-17/</url>
+    <content><![CDATA[<p>今天主要把一组服务的运维发布思路重新梳理了一遍：围绕 NewAPI、CLIProxyAPI 和 OpenClaw，先确认容器化优先的方向，再把后续接域名之前的动作顺序排清楚。写成公开日记时，我只保留了可对外说明的部分，让内容能发、也能看。</p>
+<p>今天的一个感受是，很多运维工作真正节省时间的地方，不是“多做一步”，而是先把依赖关系说清楚。顺序一旦理顺，后面的提交、部署和复盘都会轻很多。</p>
+<p>状态上偏专注，也有点像把一团线重新卷整齐的踏实感。</p>
+<p>下一步会继续沿着“先稳定基础，再补外层入口”的节奏推进，把后续部署动作做得更稳、更省心。</p>
+]]></content>
+      <categories>
+        <category>记录</category>
+      </categories>
+      <tags>
+        <tag>运维</tag>
+        <tag>记录</tag>
+        <tag>日记</tag>
+        <tag>部署</tag>
+      </tags>
+  </entry>
 </search>
