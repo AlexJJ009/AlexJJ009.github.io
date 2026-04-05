@@ -1,0 +1,341 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Harness Engineering 全景：让 AI Agent 稳定跑上十小时的六种思路 | 李功勋的个人主页</title><meta name="author" content="李功勋"><meta name="copyright" content="李功勋"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="过去一个月，我一直在想一个问题。 手里有 Claude Opus 4.6，有 GPT-5.4，有 Codex 和 Claude Code。按理说，模型能力已经足够强了。但每当我想让它们自己在服务器上跑几个小时，去完成一个稍微复杂一点的任务——比如复现一篇论文的 baseline，或者从零搭一个工程项目——它们总是在中途出问题。 要么 context window 用完了，下一轮 agent 完全不">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Harness Engineering 全景：让 AI Agent 稳定跑上十小时的六种思路">
+<meta property="og:url" content="https://alexjj009.github.io/2026/04/04/harness-engineering-landscape-2026/index.html">
+<meta property="og:site_name" content="李功勋的个人主页">
+<meta property="og:description" content="过去一个月，我一直在想一个问题。 手里有 Claude Opus 4.6，有 GPT-5.4，有 Codex 和 Claude Code。按理说，模型能力已经足够强了。但每当我想让它们自己在服务器上跑几个小时，去完成一个稍微复杂一点的任务——比如复现一篇论文的 baseline，或者从零搭一个工程项目——它们总是在中途出问题。 要么 context window 用完了，下一轮 agent 完全不">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://alexjj009.github.io/img/avatar.jpg">
+<meta property="article:published_time" content="2026-04-05T02:00:00.000Z">
+<meta property="article:modified_time" content="2026-04-05T08:39:14.501Z">
+<meta property="article:author" content="李功勋">
+<meta property="article:tag" content="AI工具">
+<meta property="article:tag" content="Harness-Engineering">
+<meta property="article:tag" content="心得体会">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://alexjj009.github.io/img/avatar.jpg"><link rel="shortcut icon" href="/img/favicon.jpg"><link rel="canonical" href="https://alexjj009.github.io/2026/04/04/harness-engineering-landscape-2026/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.12.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.32/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Harness Engineering 全景：让 AI Agent 稳定跑上十小时的六种思路',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2026-04-05 16:39:14'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/denlong.css"><!-- 左侧灯笼组--><div class="deng-box-left"><div class="deng"><div class="xian"></div><div class="deng-a"><div class="deng-b"><div class="deng-t">新</div></div></div><div class="shui shui-a"><div class="shui-c"></div><div class="shui-b"></div></div></div></div><div class="deng-box-left1"><div class="deng"><div class="xian"></div><div class="deng-a"><div class="deng-b"><div class="deng-t">年</div></div></div><div class="shui shui-a"><div class="shui-c"></div><div class="shui-b"></div></div></div></div><!-- 右侧灯笼组--><div class="deng-box-right"><div class="deng"><div class="xian"></div><div class="deng-a"><div class="deng-b"><div class="deng-t">快</div></div></div><div class="shui shui-a"><div class="shui-c"></div><div class="shui-b"></div></div></div></div><div class="deng-box-right1"><div class="deng"><div class="xian"></div><div class="deng-a"><div class="deng-b"><div class="deng-t">乐</div></div></div><div class="shui shui-a"><div class="shui-c"></div><div class="shui-b"></div></div></div></div><meta name="generator" content="Hexo 7.3.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
+    }
+  }
+
+  preloader.initLoading()
+  window.addEventListener('load',() => { preloader.endLoading() })
+
+  if (true) {
+    document.addEventListener('pjax:send', () => { preloader.initLoading() })
+    document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+  }
+})()</script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">11</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">17</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="李功勋的个人主页"><span class="site-name">李功勋的个人主页</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Harness Engineering 全景：让 AI Agent 稳定跑上十小时的六种思路</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-04-05T02:00:00.000Z" title="发表于 2026-04-05 10:00:00">2026-04-05</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-04-05T08:39:14.501Z" title="更新于 2026-04-05 16:39:14">2026-04-05</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">3k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>10分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Harness Engineering 全景：让 AI Agent 稳定跑上十小时的六种思路"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>过去一个月，我一直在想一个问题。</p>
+<p>手里有 Claude Opus 4.6，有 GPT-5.4，有 Codex 和 Claude Code。按理说，模型能力已经足够强了。但每当我想让它们自己在服务器上跑几个小时，去完成一个稍微复杂一点的任务——比如复现一篇论文的 baseline，或者从零搭一个工程项目——它们总是在中途出问题。</p>
+<p>要么 context window 用完了，下一轮 agent 完全不知道之前发生了什么，花大量时间重新搞清楚状况；要么做到一半，环顾四周觉得「差不多了」就停下来了，但其实核心功能根本跑不通；要么越跑越偏，最后的产出和最初目标南辕北辙。</p>
+<p>带着这个困惑，我注意到了 2026 年初密集出现的一个词：<strong>Harness Engineering</strong>。</p>
+<h2 id="Harness-是什么"><a href="#Harness-是什么" class="headerlink" title="Harness 是什么"></a>Harness 是什么</h2><p>Harness 的字面意思是「马具」。想象一下：AI Agent 是一匹动力十足但不太守规矩的马，在一片蛮荒之地——到处是 bug 的代码库、各种环境问题、危险的边界条件——里奔跑。Harness 就是你给这匹马套上的缰绳和马鞍，让它既能跑得快，又不会跑偏或把自己摔下悬崖。</p>
+<p>宝玉在推文 [6a] 中梳理了三个阶段的演进：</p>
+<ol>
+<li><strong>Prompt Engineering（2023-2024）</strong>：怎么跟 AI 说话。优化单次的输入和输出。</li>
+<li><strong>Context Engineering（2025）</strong>：给 AI 看什么信息。设计系统提示、对话历史、RAG、工具调用的整套信息环境。</li>
+<li><strong>Harness Engineering（2026）</strong>：构建什么环境让 AI 工作，如何保证它的产出可靠。比 Context Engineering 更进一步——管的不只是输入给模型的信息，还有模型之外的整个执行环境。</li>
+</ol>
+<p>另一位作者 George 在宝玉转译的文章 [6b] 中给出了一个更有意思的视角：这个模式在历史上出现过三次。18 世纪瓦特的离心调速器让工人从「拧阀门」变成「设计调速器」；2010 年代 Kubernetes 让工程师从「重启服务」变成「编写声明式规格」；2026 年 Harness Engineering 让开发者从「写代码」变成「设计环境和反馈循环」。三次都是同一个控制论模式：当传感器和执行器足够强大时，反馈回路在更高层面闭合，人的角色从执行变为校准。</p>
+<h2 id="从极简到重型：六种方案"><a href="#从极简到重型：六种方案" class="headerlink" title="从极简到重型：六种方案"></a>从极简到重型：六种方案</h2><p>我集中读了六篇围绕 Harness Engineering 的代表性文章。它们各自侧重不同的问题，但都在回答同一个核心疑问：<strong>怎么让 AI Agent 在长时间运行中保持有效？</strong></p>
+<p>按复杂度从简到繁排列，这六种方案可以画出一条清晰的谱系。</p>
+<h3 id="一、Karpathy-的-AutoResearch：630-行代码的极简循环"><a href="#一、Karpathy-的-AutoResearch：630-行代码的极简循环" class="headerlink" title="一、Karpathy 的 AutoResearch：630 行代码的极简循环"></a>一、Karpathy 的 AutoResearch：630 行代码的极简循环</h3><p>Karpathy 开源的 autoresearch [4] 可能是最简洁的 harness。核心设计只有一句话：<strong>人写 prompt（.md 文件），agent 写训练代码（.py 文件），每 5 分钟跑一次完整的 LLM 训练，用 validation loss 判断好坏</strong>。</p>
+<p>如果这轮 loss 更低了，agent 就把改动 commit 到 git 的 feature branch 上。然后继续下一轮。</p>
+<p>简洁到这个程度是有前提的：ML 训练有天然的数值化评估标准。Validation loss 就在那里，不需要人来定义什么叫「好」，不需要额外的 evaluator agent，不需要 Playwright 去测试 UI。agent 跑出一个数字，比上一轮低就是进步。</p>
+<h3 id="二、lidangzzz-的-Goal-Driven：一段-prompt-就是整个框架"><a href="#二、lidangzzz-的-Goal-Driven：一段-prompt-就是整个框架" class="headerlink" title="二、lidangzzz 的 Goal-Driven：一段 prompt 就是整个框架"></a>二、lidangzzz 的 Goal-Driven：一段 prompt 就是整个框架</h3><p>立党的 goal-driven [5] 比 Karpathy 的方案多了一层：他引入了 master agent 和 subagent 的分离。但令人惊讶的是，<strong>整个「框架」就是一段精心设计的 prompt 模板，没有一行代码</strong>。</p>
+<p>核心逻辑是一个 while 循环：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">while (criteria 未达成) &#123;</span><br><span class="line">    subagent 持续工作</span><br><span class="line">    master 每 5 分钟检查一次</span><br><span class="line">    如果 subagent 停了或声称完成 → 验证 criteria</span><br><span class="line">    如果没过 → 重启 subagent 继续</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>最有意思的设计决策：prompt 里明确写着「DO NOT STOP THE AGENTS UNTIL THE USER STOPS THEM MANUALLY FROM OUTSIDE」。这看起来很暴力，但确实有效。他用这套方案让 agent 持续工作 100 多个小时，全自动实现了 SQLite 的 Rust 版本（约 30 小时）和 TypeScript 编译器的 C++ 版本（约 100 小时）。</p>
+<p>不过有一个硬性前提：<strong>criteria 必须是客观可验证的</strong>。「2000 个测试用例全部通过」可以用这套方案；「这个界面好不好看」就不行。</p>
+<h3 id="三、Anthropic-V1：跨-Session-的接力赛"><a href="#三、Anthropic-V1：跨-Session-的接力赛" class="headerlink" title="三、Anthropic V1：跨 Session 的接力赛"></a>三、Anthropic V1：跨 Session 的接力赛</h3><p>Anthropic 的第一篇博客 [1] 解决的是一个非常具体的工程问题：context window 用完后，下一轮 agent 怎么接上？</p>
+<p>他们观察到两个失败模式。第一，agent 喜欢 one-shot——试图一次做完所有事，context 用到一半还没做完，下一轮 agent 面对一个半成品不知所措。第二，agent 在项目有了一定进展后，容易看看四周觉得「工作完成了」就停下来。</p>
+<p>解决方案是两个 agent 的分工：</p>
+<ul>
+<li><strong>Initializer agent</strong>：第一轮运行时，把用户的 high-level 需求展开成 200 多条 feature list（用 JSON 格式，因为模型「更不容易不当修改 JSON」——这是个实践中摸索出来的细节），设置好开发环境，写一个 init.sh 脚本。</li>
+<li><strong>Coding agent</strong>：后续每轮运行时，先读 progress 文件和 git log 搞清状况，然后只做一个 feature，做完 commit，更新进度文件，保证代码处于可合并状态。</li>
+</ul>
+<p>关键洞见是：每个 session 结束时，代码库必须处于 <strong>clean state</strong>——就像你下班前把桌面收拾干净，明天来的同事能直接开始干活。</p>
+<h3 id="四、Anthropic-V2：品味也可以打分"><a href="#四、Anthropic-V2：品味也可以打分" class="headerlink" title="四、Anthropic V2：品味也可以打分"></a>四、Anthropic V2：品味也可以打分</h3><p>Anthropic 的第二篇博客 [2] 在 V1 基础上做了大幅升级，引入了 GAN 启发的三 agent 架构：<strong>Planner</strong>（展开需求）、<strong>Generator</strong>（逐个实现）、<strong>Evaluator</strong>（交互式测试 + 打分）。</p>
+<p>这篇文章解决的核心问题不再是「能不能完成」，而是「完成的质量好不好」。作者发现，让 agent 评价自己的产出时，它倾向于自信地赞美自己的工作——哪怕在人眼里明显平庸。把「做事的」和「评判的」拆成两个 agent 是解决这个问题的关键杠杆。</p>
+<p>更有意思的是 evaluator 的校准过程。作者定义了四个维度——设计质量、原创性、工艺、功能性——刻意给前两者更高权重，因为模型默认在工艺和功能上就不错，但在设计和原创性上经常产出「AI slop」。</p>
+<p>这篇文章还有一个坦诚的观察：<strong>harness 的每个组件都编码了一个关于模型不能做什么的假设，这些假设值得持续压力测试</strong>。他们从 V1 升级到 V2 时砍掉了 sprint 机制，因为 Opus 4.6 原生就能处理长任务，不再需要人为分解。harness 设计是动态的，随着模型进步要不断精简。</p>
+<h3 id="五、OpenAI：百万行代码的长期治理"><a href="#五、OpenAI：百万行代码的长期治理" class="headerlink" title="五、OpenAI：百万行代码的长期治理"></a>五、OpenAI：百万行代码的长期治理</h3><p>OpenAI 的博客 [3] 是六篇里覆盖面最广、规模最大的。他们的团队（3 人起步，后扩至 7 人）做了一个极端实验：<strong>5 个月，0 行手写代码</strong>，完全由 Codex agent 生成了一个有真实用户的内部产品。百万行代码，约 1500 个 PR，平均每人每天 3.5 个。</p>
+<p>跟前面几种方案相比，OpenAI 要回答的问题更进一步：agent 跑完了一个任务，那代码库的<strong>长期可维护性</strong>怎么办？</p>
+<p>他们的核心贡献是一套以仓库为中心的知识管理体系。早期试过一个大 AGENTS.md 文件塞进所有指令，失败了——context 是稀缺资源，什么都「重要」等于什么都不重要。最终方案是 <strong>progressive disclosure</strong>：AGENTS.md 只有约 100 行，充当目录；详细知识分散在 docs&#x2F; 下的结构化文档中，agent 按需查阅。</p>
+<p>另一个独到的贡献是对 <strong>entropy</strong> 的处理。他们发现 agent 会复制代码库中已有的模式，包括不好的模式，导致质量漂移。最初每周五花 20% 时间手动清理「AI slop」，后来改成了自动化：将品质标准编码为 golden principles，定期跑后台 agent 扫描偏差并自动开 PR 修复。就像垃圾回收——持续小增量偿还技术债。</p>
+<h3 id="六、dotey-的理论框架"><a href="#六、dotey-的理论框架" class="headerlink" title="六、dotey 的理论框架"></a>六、dotey 的理论框架</h3><p>宝玉的两篇推文 [6a][6b] 不是一手的工程实践，但提供了把前面五种方案串起来的理论视角。三阶段演进和控制论类比前面已经提到了。他转译的文章里有一句话特别精准：</p>
+<blockquote>
+<p>「智能体失败，大多时候不是因为能力不够，而是因为它需要的知识——什么叫好、架构鼓励哪些模式、回避哪些模式——锁在你脑子里，你从没把它外化出来。」</p>
+</blockquote>
+<p><strong>让判断力变得机器可读</strong>——这句话是对整个 Harness Engineering 的高度概括。</p>
+<h2 id="六篇文章的共识"><a href="#六篇文章的共识" class="headerlink" title="六篇文章的共识"></a>六篇文章的共识</h2><p>读完这六篇文章，有几个结论跳了出来。</p>
+<p><strong>做事和评估一定要分开。</strong> 这是最强的共识。Anthropic [2] 用 generator-evaluator 分离；lidangzzz [5] 用 master-subagent 分离；OpenAI [3] 用 agent-to-agent review。大家不约而同地发现：让同一个 agent 既干活又判断质量，它会倾向于高估自己的产出。</p>
+<p><strong>Agent 过早放弃是最常见的失败模式。</strong> Anthropic [1] 叫它「premature declaration of completion」，Anthropic [2] 叫它「context anxiety」，lidangzzz [5] 整个框架的存在理由就是对抗这个问题。解法各不相同，但问题一样。</p>
+<p><strong>所有状态都通过文件系统外化。</strong> 没有任何方案依赖 agent 的「记忆」。progress 文件、git commit、plan 文档、feedback 文件——全部写在磁盘上。Agent 的 context 是短暂的，文件是持久的。</p>
+<h2 id="关键的分歧"><a href="#关键的分歧" class="headerlink" title="关键的分歧"></a>关键的分歧</h2><p><strong>反馈信号的性质决定了 harness 的复杂度。</strong> Karpathy 有 validation loss，lidangzzz 有通过&#x2F;不通过的测试用例，所以它们的 harness 可以极简。Anthropic [2] 要评估设计品味，OpenAI [3] 要维护架构一致性，所以需要更复杂的评估机制。</p>
+<p><strong>简洁和系统工程之间的张力。</strong> lidangzzz 的一段 prompt 实现了编译器；OpenAI 的一整套 repo 工程体系维护了百万行产品。两者都是正确的，因为面对的问题不同。简单任务上重型 harness 是浪费；复杂任务上极简方案撑不住。选择取决于<strong>任务的可验证性 x 运行时长</strong>这两个变量。</p>
+<h2 id="这篇文章没有覆盖的"><a href="#这篇文章没有覆盖的" class="headerlink" title="这篇文章没有覆盖的"></a>这篇文章没有覆盖的</h2><p>有几个问题在六篇文章中都没被充分讨论：<strong>成本效率</strong>（100+ 小时的 token 消耗到底花多少钱？）、<strong>失败案例</strong>（各方倾向于展示成功，harness 的边界在哪里？）、<strong>非编程领域的 harness</strong>（能推广到科学研究或写作吗？）以及<strong>自动构建 harness 的元工具</strong>——根据任务的难度和可验证性，自动决定该用哪种方案。这最后一个可能是下一步的研究方向。</p>
+<p>下一篇文章，我会讲自己动手搭 harness 的过程——从参照 OpenAI 的文档系统（跑了 1 小时）到参照 Anthropic 的三 Agent 架构（跑了 10 小时），两轮迭代中踩过的坑和学到的东西。</p>
+<hr>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><ul>
+<li>[1] Justin Young.「Effective harnesses for long-running agents」. Anthropic Engineering Blog. <a target="_blank" rel="noopener" href="https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents">https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents</a></li>
+<li>[2] Prithvi Rajasekaran.「Harness design for long-running application development」. Anthropic Engineering Blog. <a target="_blank" rel="noopener" href="https://www.anthropic.com/engineering/harness-design-long-running-apps">https://www.anthropic.com/engineering/harness-design-long-running-apps</a></li>
+<li>[3] Ryan Lopopolo.「Harness engineering: leveraging Codex in an agent-first world」. OpenAI Engineering Blog, 2026-02-11. <a target="_blank" rel="noopener" href="https://openai.com/index/harness-engineering/">https://openai.com/index/harness-engineering/</a></li>
+<li>[4] Andrej Karpathy.「AutoResearch」. X&#x2F;Twitter, 2026-03-07. <a target="_blank" rel="noopener" href="https://x.com/karpathy/status/2030371219518931079">https://x.com/karpathy/status/2030371219518931079</a> &#x2F; Repo: <a target="_blank" rel="noopener" href="https://github.com/karpathy/autoresearch">https://github.com/karpathy/autoresearch</a></li>
+<li>[5] 立党 (lidangzzz).「Goal-Driven」. X&#x2F;Twitter, 2026-03-18. <a target="_blank" rel="noopener" href="https://x.com/lidangzzz/status/2034112273803882988">https://x.com/lidangzzz/status/2034112273803882988</a> &#x2F; Repo: <a target="_blank" rel="noopener" href="https://github.com/lidangzzz/goal-driven">https://github.com/lidangzzz/goal-driven</a></li>
+<li>[6a] 宝玉 (dotey).「2026 年 Harness Engineering 这个词要火」. X&#x2F;Twitter, 2026-02-26. <a target="_blank" rel="noopener" href="https://x.com/dotey/status/2027156511555027252">https://x.com/dotey/status/2027156511555027252</a></li>
+<li>[6b] 宝玉 (dotey), 转译 George (@odysseus0z).「Harness 工程就是控制论」. X&#x2F;Twitter, 2026-03-07. <a target="_blank" rel="noopener" href="https://x.com/dotey/status/2031231856071372830">https://x.com/dotey/status/2031231856071372830</a></li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://alexjj009.github.io">李功勋</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://alexjj009.github.io/2026/04/04/harness-engineering-landscape-2026/">https://alexjj009.github.io/2026/04/04/harness-engineering-landscape-2026/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://alexjj009.github.io" target="_blank">李功勋的个人主页</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/AI%E5%B7%A5%E5%85%B7/">AI工具</a><a class="post-meta__tags" href="/tags/Harness-Engineering/">Harness-Engineering</a><a class="post-meta__tags" href="/tags/%E5%BF%83%E5%BE%97%E4%BD%93%E4%BC%9A/">心得体会</a></div><div class="post_share"><div class="social-share" data-image="/img/avatar.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i>赞助</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.jpg" target="_blank"><img class="post-qr-code-img" src="/img/wechat.jpg" alt="微信/wechat"/></a><div class="post-qr-code-desc">微信/wechat</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/alipay.jpg" alt="支付宝/alipay"/></a><div class="post-qr-code-desc">支付宝/alipay</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2026/04/04/harness-engineering-practice-2026/" title="Harness 实战：从文档系统到三 Agent 架构，运行时长从 1 小时到 10 小时"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Harness 实战：从文档系统到三 Agent 架构，运行时长从 1 小时到 10 小时</div></div></a></div><div class="next-post pull-right"><a href="/2026/02/04/blog-ops-start/" title="博客运维启动"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">博客运维启动</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2026/04/04/harness-engineering-practice-2026/" title="Harness 实战：从文档系统到三 Agent 架构，运行时长从 1 小时到 10 小时"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2026-04-05</div><div class="title">Harness 实战：从文档系统到三 Agent 架构，运行时长从 1 小时到 10 小时</div></div></a></div><div><a href="/2025/12/14/when-to-use-ai-for-ppt/" title="什么时候应该让AI帮我做PPT？"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-12-14</div><div class="title">什么时候应该让AI帮我做PPT？</div></div></a></div></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="utterances-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">李功勋</div><div class="author-info__description">北航 CS PhD（拟入学）</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">11</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">17</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/AlexJJ009/AlexJJ009.github.io" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:22377224@buaa.edu.cn" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Harness-%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-number">1.</span> <span class="toc-text">Harness 是什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8E%E6%9E%81%E7%AE%80%E5%88%B0%E9%87%8D%E5%9E%8B%EF%BC%9A%E5%85%AD%E7%A7%8D%E6%96%B9%E6%A1%88"><span class="toc-number">2.</span> <span class="toc-text">从极简到重型：六种方案</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E3%80%81Karpathy-%E7%9A%84-AutoResearch%EF%BC%9A630-%E8%A1%8C%E4%BB%A3%E7%A0%81%E7%9A%84%E6%9E%81%E7%AE%80%E5%BE%AA%E7%8E%AF"><span class="toc-number">2.1.</span> <span class="toc-text">一、Karpathy 的 AutoResearch：630 行代码的极简循环</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E3%80%81lidangzzz-%E7%9A%84-Goal-Driven%EF%BC%9A%E4%B8%80%E6%AE%B5-prompt-%E5%B0%B1%E6%98%AF%E6%95%B4%E4%B8%AA%E6%A1%86%E6%9E%B6"><span class="toc-number">2.2.</span> <span class="toc-text">二、lidangzzz 的 Goal-Driven：一段 prompt 就是整个框架</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E3%80%81Anthropic-V1%EF%BC%9A%E8%B7%A8-Session-%E7%9A%84%E6%8E%A5%E5%8A%9B%E8%B5%9B"><span class="toc-number">2.3.</span> <span class="toc-text">三、Anthropic V1：跨 Session 的接力赛</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9B%E3%80%81Anthropic-V2%EF%BC%9A%E5%93%81%E5%91%B3%E4%B9%9F%E5%8F%AF%E4%BB%A5%E6%89%93%E5%88%86"><span class="toc-number">2.4.</span> <span class="toc-text">四、Anthropic V2：品味也可以打分</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%94%E3%80%81OpenAI%EF%BC%9A%E7%99%BE%E4%B8%87%E8%A1%8C%E4%BB%A3%E7%A0%81%E7%9A%84%E9%95%BF%E6%9C%9F%E6%B2%BB%E7%90%86"><span class="toc-number">2.5.</span> <span class="toc-text">五、OpenAI：百万行代码的长期治理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%AD%E3%80%81dotey-%E7%9A%84%E7%90%86%E8%AE%BA%E6%A1%86%E6%9E%B6"><span class="toc-number">2.6.</span> <span class="toc-text">六、dotey 的理论框架</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E7%AF%87%E6%96%87%E7%AB%A0%E7%9A%84%E5%85%B1%E8%AF%86"><span class="toc-number">3.</span> <span class="toc-text">六篇文章的共识</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B3%E9%94%AE%E7%9A%84%E5%88%86%E6%AD%A7"><span class="toc-number">4.</span> <span class="toc-text">关键的分歧</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%99%E7%AF%87%E6%96%87%E7%AB%A0%E6%B2%A1%E6%9C%89%E8%A6%86%E7%9B%96%E7%9A%84"><span class="toc-number">5.</span> <span class="toc-text">这篇文章没有覆盖的</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE"><span class="toc-number">6.</span> <span class="toc-text">参考文献</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/04/04/harness-engineering-practice-2026/" title="Harness 实战：从文档系统到三 Agent 架构，运行时长从 1 小时到 10 小时">Harness 实战：从文档系统到三 Agent 架构，运行时长从 1 小时到 10 小时</a><time datetime="2026-04-05T03:00:00.000Z" title="发表于 2026-04-05 11:00:00">2026-04-05</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/04/04/harness-engineering-landscape-2026/" title="Harness Engineering 全景：让 AI Agent 稳定跑上十小时的六种思路">Harness Engineering 全景：让 AI Agent 稳定跑上十小时的六种思路</a><time datetime="2026-04-05T02:00:00.000Z" title="发表于 2026-04-05 10:00:00">2026-04-05</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/02/04/blog-ops-start/" title="博客运维启动">博客运维启动</a><time datetime="2026-02-04T10:10:00.000Z" title="发表于 2026-02-04 18:10:00">2026-02-04</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/12/14/when-to-use-ai-for-ppt/" title="什么时候应该让AI帮我做PPT？">什么时候应该让AI帮我做PPT？</a><time datetime="2025-12-14T09:11:53.000Z" title="发表于 2025-12-14 17:11:53">2025-12-14</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/11/20/ai-voice-input-method-2025/" title="25年了，我们都应该使用AI语音输入法">25年了，我们都应该使用AI语音输入法</a><time datetime="2025-11-20T14:40:33.000Z" title="发表于 2025-11-20 22:40:33">2025-11-20</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2024-01 - 2026 By 李功勋</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.12.0"></script><script src="/js/main.js?v=4.12.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.32/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>(() => {
+  const loadUtterances = () => {
+    let ele = document.createElement('script')
+    ele.id = 'utterances_comment'
+    ele.src = 'https://utteranc.es/client.js'
+    ele.setAttribute('repo', 'AlexJJ009/AlexJJ009.github.io')
+    ele.setAttribute('issue-term', 'pathname')
+    const nowTheme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'photon-dark' : 'github-light'
+    ele.setAttribute('theme', nowTheme)
+    ele.crossOrigin = 'anonymous'
+    ele.async = true
+    document.getElementById('utterances-wrap').appendChild(ele)
+  }
+
+  const utterancesTheme = theme => {
+    const iframe = document.querySelector('.utterances-frame')
+    if (iframe) {
+      const theme = theme === 'dark' ? 'photon-dark' : 'github-light'
+      const message = {
+        type: 'set-theme',
+        theme: theme
+      };
+      iframe.contentWindow.postMessage(message, 'https://utteranc.es');
+    }
+  }
+
+  btf.addGlobalFn('themeChange', utterancesTheme, 'utterances')
+
+  if ('Utterances' === 'Utterances' || !false) {
+    if (false) btf.loadComment(document.getElementById('utterances-wrap'), loadUtterances)
+    else loadUtterances()
+  } else {
+    window.loadOtherComment = loadUtterances
+  }
+})()</script></div><script src="/js/denlong.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-nest.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js"></script><script>let pjaxSelectors = ["link[rel=\"canonical\"]","meta[property=\"og:image\"]","meta[property=\"og:title\"]","meta[property=\"og:url\"]","head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener
+  btf.removeGlobalFnEvent('pjax')
+  btf.removeGlobalFnEvent('themeChange')
+
+  document.getElementById('rightside').classList.remove('rightside-show')
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+  typeof disqusjs === 'object' && disqusjs.destroy()
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', e => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.12.0"></script></div></div></body></html>
